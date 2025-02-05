@@ -1,0 +1,126 @@
+import React, { useState } from 'react';
+import { Heart } from 'lucide-react';
+
+const ValentinePage = () => {
+  const [yesSize, setYesSize] = useState(16);
+  const [showThanks, setShowThanks] = useState(false);
+  
+  const handleNo = () => {
+    setYesSize(prev => Math.min(prev * 1.5, window.innerWidth));
+  };
+
+  const handleYes = () => {
+    setShowThanks(true);
+  };
+
+  // Custom bear with holding heart component
+  const BearWithHeart = () => (
+    <div className="relative inline-block">
+      <div className="flex items-center justify-center">
+        <div className="relative">
+          {/* Bear */}
+          <div className="text-9xl">🧸</div>
+          {/* Hands positioned over bear's chest */}
+          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-8xl">
+            👐
+          </div>
+          {/* Glowing Heart positioned in hands */}
+          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 translate-y-4">
+            <div className="relative">
+              <Heart 
+                className="text-red-500 animate-pulse" 
+                size={64}
+                fill="red"
+              />
+              <div className="absolute top-0 left-0 w-full h-full">
+                <Heart 
+                  className="text-red-300 blur-lg animate-pulse" 
+                  size={64}
+                  fill="red"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Main bear on first page
+  const MainBear = () => (
+    <div className="relative inline-block">
+      <div className="flex items-center justify-center">
+        <div className="relative">
+          {/* Bear */}
+          <div className="text-9xl">🧸</div>
+          {/* Open hands emoji positioned at chest level */}
+          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-8xl">
+            👐
+          </div>
+          {/* Heart positioned in hands */}
+          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 translate-y-4">
+            <Heart 
+              className="text-red-500 animate-pulse" 
+              size={96}
+              fill="red"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (showThanks) {
+    return (
+      <div className="fixed inset-0 bg-pink-100 flex flex-col items-center justify-center">
+        <div className="flex gap-16 items-center">
+          <BearWithHeart />
+          <div className="flex flex-col items-center gap-4">
+            <h1 className="text-4xl font-bold text-red-500 mb-4">Thank You!</h1>
+            <Heart 
+              className="text-red-500 animate-pulse" 
+              size={96}
+              fill="red"
+            />
+          </div>
+          <BearWithHeart />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="fixed inset-0 bg-pink-100 flex flex-col items-center justify-center">
+      <div className="mb-8">
+        <MainBear />
+      </div>
+      
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-2xl font-bold text-red-500 mb-4">Will you be my Valentine?</h1>
+        
+        <div className="flex gap-4">
+          <button
+            onClick={handleYes}
+            className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition-all"
+            style={{ 
+              fontSize: `${yesSize}px`,
+              padding: `${Math.min(yesSize/2, 32)}px`,
+              zIndex: 10
+            }}
+          >
+            Yes
+          </button>
+          
+          <button
+            onClick={handleNo}
+            className="bg-red-600 text-white rounded px-4 py-2 hover:bg-red-700 transition-all"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ValentinePage;
