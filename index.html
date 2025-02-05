@@ -1,126 +1,129 @@
-import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: pink;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
 
-const ValentinePage = () => {
-  const [yesSize, setYesSize] = useState(16);
-  const [showThanks, setShowThanks] = useState(false);
-  
-  const handleNo = () => {
-    setYesSize(prev => Math.min(prev * 1.5, window.innerWidth));
-  };
+        .container {
+            text-align: center;
+        }
 
-  const handleYes = () => {
-    setShowThanks(true);
-  };
+        .heart {
+            color: red;
+            font-size: 150px;
+            margin: 20px;
+        }
 
-  // Custom bear with holding heart component
-  const BearWithHeart = () => (
-    <div className="relative inline-block">
-      <div className="flex items-center justify-center">
-        <div className="relative">
-          {/* Bear */}
-          <div className="text-9xl">🧸</div>
-          {/* Hands positioned over bear's chest */}
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-8xl">
-            👐
-          </div>
-          {/* Glowing Heart positioned in hands */}
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 translate-y-4">
-            <div className="relative">
-              <Heart 
-                className="text-red-500 animate-pulse" 
-                size={64}
-                fill="red"
-              />
-              <div className="absolute top-0 left-0 w-full h-full">
-                <Heart 
-                  className="text-red-300 blur-lg animate-pulse" 
-                  size={64}
-                  fill="red"
-                />
-              </div>
-            </div>
-          </div>
+        .bear {
+            font-size: 100px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #666;
+            color: white;
+        }
+
+        .thank-you {
+            display: none;
+            text-align: center;
+        }
+
+        .thank-you .heart {
+            font-size: 100px;
+            margin: 20px;
+        }
+
+        .bears {
+            font-size: 80px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContent">
+        <div class="bear">🧸</div>
+        <div class="heart">❤️</div>
+        <div class="buttons">
+            <button class="btn" id="yesBtn">Yes</button>
+            <button class="btn" id="noBtn">No</button>
         </div>
-      </div>
     </div>
-  );
 
-  // Main bear on first page
-  const MainBear = () => (
-    <div className="relative inline-block">
-      <div className="flex items-center justify-center">
-        <div className="relative">
-          {/* Bear */}
-          <div className="text-9xl">🧸</div>
-          {/* Open hands emoji positioned at chest level */}
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 text-8xl">
-            👐
-          </div>
-          {/* Heart positioned in hands */}
-          <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 translate-y-4">
-            <Heart 
-              className="text-red-500 animate-pulse" 
-              size={96}
-              fill="red"
-            />
-          </div>
+    <div class="thank-you" id="thankYou">
+        <h1>Thank You!</h1>
+        <div class="heart">❤️</div>
+        <div class="bears">
+            🧸❤️🧸
         </div>
-      </div>
     </div>
-  );
 
-  if (showThanks) {
-    return (
-      <div className="fixed inset-0 bg-pink-100 flex flex-col items-center justify-center">
-        <div className="flex gap-16 items-center">
-          <BearWithHeart />
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="text-4xl font-bold text-red-500 mb-4">Thank You!</h1>
-            <Heart 
-              className="text-red-500 animate-pulse" 
-              size={96}
-              fill="red"
-            />
-          </div>
-          <BearWithHeart />
-        </div>
-      </div>
-    );
-  }
+    <script>
+        let yesButtonSize = 18;
+        let noClickCount = 0;
+        const noButton = document.getElementById('noBtn');
+        const yesButton = document.getElementById('yesBtn');
+        const mainContent = document.getElementById('mainContent');
+        const thankYou = document.getElementById('thankYou');
 
-  return (
-    <div className="fixed inset-0 bg-pink-100 flex flex-col items-center justify-center">
-      <div className="mb-8">
-        <MainBear />
-      </div>
-      
-      <div className="flex flex-col items-center gap-4">
-        <h1 className="text-2xl font-bold text-red-500 mb-4">Will you be my Valentine?</h1>
-        
-        <div className="flex gap-4">
-          <button
-            onClick={handleYes}
-            className="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600 transition-all"
-            style={{ 
-              fontSize: `${yesSize}px`,
-              padding: `${Math.min(yesSize/2, 32)}px`,
-              zIndex: 10
-            }}
-          >
-            Yes
-          </button>
-          
-          <button
-            onClick={handleNo}
-            className="bg-red-600 text-white rounded px-4 py-2 hover:bg-red-700 transition-all"
-          >
-            No
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+        noButton.addEventListener('click', () => {
+            noClickCount++;
+            // Exponential growth for the yes button
+            yesButtonSize *= 1.5;  // Multiplies size by 1.5 each time
+            yesButton.style.fontSize = yesButtonSize + 'px';
+            yesButton.style.padding = (yesButtonSize/3) + 'px';
+            
+            // Move No button to random position
+            const maxX = window.innerWidth - noButton.offsetWidth;
+            const maxY = window.innerHeight - noButton.offsetHeight;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            noButton.style.position = 'absolute';
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
 
-export default ValentinePage;
+            // Make the No button start fading after 3 clicks
+            if (noClickCount >= 3) {
+                noButton.style.opacity = 1 - ((noClickCount - 3) * 0.2);
+                if (noClickCount >= 7) {
+                    noButton.style.display = 'none';
+                }
+            }
+        });
+
+        yesButton.addEventListener('click', () => {
+            mainContent.style.display = 'none';
+            thankYou.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
